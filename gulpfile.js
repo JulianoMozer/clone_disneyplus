@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
+const imagemin = require('gulp-imagemin');
 
 // Função para compilar os arquivos SCSS
 function styles() {
@@ -8,8 +9,14 @@ function styles() {
         .pipe(gulp.dest('./dist/css')); // Salva o resultado na pasta 'dist/css'
 }
 
+function images() {
+    return gulp.src('./src/images/**/*') // Pega todos os arquivos SCSS
+        .pipe(imagemin())
+        .pipe(gulp.dest('./dist/images')); // Salva o resultado na pasta 'dist/css'
+}
+
 // Exporta a função de estilos como tarefa padrão
-exports.default = styles;
+exports.default = gulp.parallel(styles, images);
 
 // Tarefa que observa as mudanças nos arquivos SCSS
 exports.watch = function() {
